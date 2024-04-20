@@ -6,4 +6,13 @@ def home(request):
 
 
 def contacts(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+        print(f'Ваше сообщение: {name}, {phone}, {message}')
+        with open('write.txt', 'wt', encoding='UTF-8') as file:
+            file.write(f'Ваше сообщение: {name}, {phone}, {message}')
+
+        return render(request, 'main/contacts.html')
     return render(request, 'catalog/contacts.html')
