@@ -34,7 +34,7 @@ class Product(models.Model):
     price = models.FloatField(verbose_name="Цена за покупку")
     creation_at = models.DateTimeField(default=timezone.now, verbose_name="Дата создания (записи в БД)")
     updated_at = models.DateTimeField(default=timezone.now, verbose_name="Дата последнего изменения (записи в БД)"
-    )
+                                      )
 
     def __str__(self):
         return f'{self.name} {self.price}'
