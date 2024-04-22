@@ -45,7 +45,6 @@ class Command(BaseCommand):
                         category=Category.objects.get(pk=product['fields']['category']),
                         name=product['fields']['name'],
                         price=product['fields']['price'],
-                        description=product['fields']['description']
-                        )
+                        description=product['fields']['description'])
             )
         Product.objects.bulk_create(product_for_create)
