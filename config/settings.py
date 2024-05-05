@@ -9,12 +9,18 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# DB settings
+PATH_DB = BASE_DIR / '.env'
+load_dotenv(PATH_DB)
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+USER_DB = os.getenv('USER_DB')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -38,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'catalog'
+    'catalog',
+    'bloging',
 ]
 
 MIDDLEWARE = [
@@ -79,8 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'DjangoDB',  # Название БД
-        'USER': 'postgres',  # Пользователь для подключения
-        'PASSWORD': '17thpaladin',  # Пароль для этого пользователя
+        'USER': USER_DB,  # Пользователь для подключения
+        'PASSWORD': PASSWORD_DB,  # Пароль для этого пользователя
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -133,4 +140,4 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
