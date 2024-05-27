@@ -11,7 +11,7 @@ class BlogListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset().order_by(*args, **kwargs)
-        queryset = queryset.filter(puplished=True)
+        queryset = queryset.filter(is_published=True)
         return queryset
 
 
