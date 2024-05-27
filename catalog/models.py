@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
+from users.models import User
+
+NULLABLE = {'null': True, 'blank': True}
+
 
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name="Наименование")
@@ -16,12 +20,11 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=150, verbose_name="Наименование")
-    description = models.TextField(blank=True, null=True, verbose_name="Описание")
+    description = models.TextField(verbose_name="Описание", **NULLABLE)
     image = models.ImageField(
         upload_to='media/catalog',
-        blank=True,
-        null=True,
         verbose_name='Изображение (превью)',
+        **NULLABLE
     )
     category = models.ForeignKey(
         Category,
@@ -33,8 +36,8 @@ class Product(models.Model):
     )
     price = models.FloatField(verbose_name="Цена за покупку")
     creation_at = models.DateTimeField(default=timezone.now, verbose_name="Дата создания (записи в БД)")
-    updated_at = models.DateTimeField(default=timezone.now, verbose_name="Дата последнего изменения (записи в БД)"
-                                      )
+    updated_at = models.DateTimeField(default=timezone.now, verbose_name="Дата последнего изменения (записи в БД)")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Создан пользователем", **NULLABLE)
 
     def __str__(self):
         return f'{self.name} {self.price}'
