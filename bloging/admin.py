@@ -4,4 +4,8 @@ from bloging.models import Blog
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'body', 'image',)
+    list_display = (
+        "title",
+        "body",
+        "image",
+    )
