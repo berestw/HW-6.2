@@ -14,10 +14,21 @@ from django.views.generic import (
 
 from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
 from catalog.models import Product, Version
+from catalog.services.services import get_category_from_cache, get_product_from_cache
 
 
 class HomeListView(ListView):
     model = Product
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = get_product_from_cache()
+        category_id = self.kwargs.get("category_id")
+        return queryset.filter(category_id=category_id) if category_id else queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data["categories"] = get_category_from_cache()
+        return context_data
 
 
 class ContactsTemplateView(TemplateView):
